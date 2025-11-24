@@ -15,10 +15,11 @@ const NotificationsView = () => import('@/views/NotificationsView.vue')
 const SettingsView = () => import('@/views/SettingsView.vue')
 const HelpCenterView = () => import('@/views/HelpCenterView.vue')
 const HelpCenterDetailView = () => import('@/views/HelpCenterDetailView.vue')
-const AuthenticationView = () => import('@/views/AuthenticationView.vue')
 const AdminPagesView = () => import('@/views/AdminPagesView.vue')
 const UtilityPagesView = () => import('@/views/UtilityPagesView.vue')
 const LoginView = () => import('@/views/LoginView.vue')
+
+// 這三個用在 Authentication 區塊（扁平路由）
 const SignUpView = () => import('@/views/SignUp.vue')
 const SignInView = () => import('@/views/SignIn.vue')
 const ResetPasswordView = () => import('@/views/ResetPassword.vue')
@@ -90,32 +91,25 @@ const routes = [
         component: () => import('@/views/LoginPolicyView.vue'),
       },
 
-      // Authentication 區塊：父路由 + 三個子路由
+      // Authentication 區塊：改成扁平路由
       {
         path: 'auth-pages',
-        component: AuthenticationView,
-        children: [
-          {
-            path: '',
-            name: 'auth-pages',
-            component: SignUpView,
-          },
-          {
-            path: 'sign-up',
-            name: 'auth-sign-up',
-            component: SignUpView,
-          },
-          {
-            path: 'sign-in',
-            name: 'auth-sign-in',
-            component: SignInView,
-          },
-          {
-            path: 'reset-password',
-            name: 'auth-reset-password',
-            component: ResetPasswordView,
-          },
-        ],
+        redirect: { name: 'auth-sign-up' },
+      },
+      {
+        path: 'auth-pages/sign-up',
+        name: 'auth-sign-up',
+        component: SignUpView,
+      },
+      {
+        path: 'auth-pages/sign-in',
+        name: 'auth-sign-in',
+        component: SignInView,
+      },
+      {
+        path: 'auth-pages/reset-password',
+        name: 'auth-reset-password',
+        component: ResetPasswordView,
       },
 
       {
